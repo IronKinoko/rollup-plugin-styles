@@ -1,7 +1,6 @@
 import path from "path";
 import { Plugin, OutputChunk, OutputAsset } from "rollup";
 import { createFilter } from "@rollup/pluginutils";
-import { Processor } from "postcss";
 import cssnano from "cssnano";
 import { LoaderContext, Extracted } from "./loaders/types";
 import { ExtractedData, Options, PostCSSLoaderOptions } from "./types";
@@ -19,7 +18,7 @@ import {
   ensurePCSSPlugins,
 } from "./utils/options";
 
-export default (options: Options = {}): Plugin => {
+export default function styles(options: Options = {}): Plugin {
   const isIncluded = createFilter(options.include, options.exclude);
 
   const sourceMap = inferSourceMapOption(options.sourceMap);
@@ -277,7 +276,7 @@ export default (options: Options = {}): Plugin => {
         // Perform minimization on the extracted file
         if (loaderOpts.minimize) {
           const cssnanoOpts = typeof loaderOpts.minimize === "object" ? loaderOpts.minimize : {};
-          const minifier = cssnano(cssnanoOpts) as Processor;
+          const minifier = cssnano(cssnanoOpts);
 
           const resMin = await minifier.process(res.css, {
             from: res.name,
@@ -334,4 +333,4 @@ export default (options: Options = {}): Plugin => {
   };
 
   return plugin;
-};
+}

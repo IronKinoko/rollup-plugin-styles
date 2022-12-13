@@ -1,4 +1,4 @@
-import resolver, { sync, AsyncOpts, SyncOpts } from "resolve";
+import resolver, { AsyncOpts, SyncOpts } from "resolve";
 import { resolve as resolveExports, legacy as resolveFields } from "resolve.exports";
 import arrayFmt from "./array-fmt";
 
@@ -89,7 +89,7 @@ export async function resolveAsync(ids: string[], userOpts: ResolveOpts): Promis
 
 const resolverSync = (id: string, options: SyncOpts = {}): string | undefined => {
   try {
-    return sync(id, options);
+    return resolver.sync(id, options);
   } catch {
     return;
   }

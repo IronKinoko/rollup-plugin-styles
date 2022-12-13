@@ -18,10 +18,7 @@ const config = [
   // Bundle
   {
     input: "./src/index.ts",
-    output: [
-      { format: "cjs", file: pkg.exports.require, exports: "default" },
-      { format: "es", file: pkg.exports.import, exports: "default" },
-    ],
+    output: [{ format: "cjs", file: pkg.main }],
     plugins: [
       externals({ deps: true }),
       replace({
